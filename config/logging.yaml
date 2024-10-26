@@ -1,0 +1,110 @@
+version: 1
+disable_existing_loggers: false
+
+formatters:
+  standard:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  detailed:
+    format: '%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s'
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: standard
+    stream: ext://sys.stdout
+
+  file_trading:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: detailed
+    filename: logs/trading/trading.log
+    when: midnight
+    interval: 1
+    backupCount: 30
+    encoding: utf8
+
+  file_analysis:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: detailed
+    filename: logs/analysis/analysis.log
+    when: midnight
+    interval: 1
+    backupCount: 30
+    encoding: utf8
+
+  file_portfolio:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: detailed
+    filename: logs/portfolio/portfolio.log
+    when: midnight
+    interval: 1
+    backupCount: 30
+    encoding: utf8
+
+  file_social:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: detailed
+    filename: logs/social/social.log
+    when: midnight
+    interval: 1
+    backupCount: 30
+    encoding: utf8
+
+  file_error:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: ERROR
+    formatter: detailed
+    filename: logs/error.log
+    when: midnight
+    interval: 1
+    backupCount: 30
+    encoding: utf8
+
+  file_manipulation:
+    class: logging.handlers.TimedRotatingFileHandler
+    level: INFO
+    formatter: detailed
+    filename: logs/manipulation/manipulation.log
+    when: midnight
+    interval: 1
+    backupCount: 30
+    encoding: utf8
+
+loggers:
+  ai_trading_bot:
+    level: INFO
+    handlers: [console, file_error]
+    propagate: no
+
+  ai_trading_bot.trading:
+    level: INFO
+    handlers: [file_trading]
+    propagate: yes
+
+  ai_trading_bot.analysis:
+    level: INFO
+    handlers: [file_analysis]
+    propagate: yes
+
+  ai_trading_bot.portfolio:
+    level: INFO
+    handlers: [file_portfolio]
+    propagate: yes
+
+  ai_trading_bot.social:
+    level: INFO
+    handlers: [file_social]
+    propagate: yes
+
+  ai_trading_bot.manipulation:
+    level: INFO
+    handlers: [file_manipulation]
+    propagate: yes
+
+root:
+  level: INFO
+  handlers: [console, file_error]
